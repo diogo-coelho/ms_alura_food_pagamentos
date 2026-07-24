@@ -5,6 +5,7 @@ import br.com.alurafood.pagamento.service.PagamentoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -33,6 +34,11 @@ public class PagamentoController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/porta")
+    public String retornaPorta(@Value("${local.server.port}") String port) {
+        return String.format("Requisição respondida pela instânci executando na porta %s", port);
+    }
+
     @PostMapping
     public ResponseEntity<PagamentoDTO> cadastrar(@RequestBody @Valid PagamentoDTO dto, UriComponentsBuilder uriBuilder) {
         PagamentoDTO pagamento = service.criarPagamento(dto);
@@ -51,6 +57,11 @@ public class PagamentoController {
     public ResponseEntity<PagamentoDTO> remover(@PathVariable @NotNull Long id) {
         service.excluirPagamento(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/confirmar")
+    public void confirmarPagamento(@PathVariable @NotNull Long id) {
+        service.confirmarPagamento(id);
     }
 
 }
