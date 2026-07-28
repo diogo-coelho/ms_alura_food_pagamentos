@@ -9,6 +9,6 @@ services:
     volumes:
       - ./dados:/var/lib/rabbitmq/
     environment:
-      - RABBITMQ_DEFAULT_USER=diogo
-      - RABBITMQ_DEFAULT_PASS=diogo
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
   
